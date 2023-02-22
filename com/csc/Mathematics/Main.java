@@ -1,17 +1,10 @@
 package com.csc.Mathematics;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Stream;
-import java.util.Set;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import java.util.Stack;
-
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import java.math.BigDecimal;
@@ -28,50 +21,6 @@ class Main {
 
         int least = Main.findLeastNumberOfRequiredMoves(cuboid);
         System.out.println(least);
-        // cuboid.display();
-        // cuboid.collect(new int[] {0, 0, 2});
-        // cuboid.positions = cuboid.collect(cuboid.best());
-        // cuboid.display();
-        // cuboid.positions = cuboid.collect(cuboid.best());
-        // cuboid.display();
-        // cuboid.positions = cuboid.collect(cuboid.best());
-        // cuboid.display();
-        // cuboid.positions = cuboid.collect(cuboid.best());
-        // cuboid.display();
-        // cuboid.positions = cuboid.collect(cuboid.best());
-        // cuboid.display();
-        
-        // cuboid.best();
-        // System.out.println(cuboid.positions);
-        // for (int z = 0; z < length.primitive(); ++z) {
-        //     for (int y = 0; y < height.primitive(); ++y) {
-        //         for (int x = 0; x < width.primitive(); ++x) {
-        //             System.out.format("(x:: %d, y::%d, z::%d) || ", x, y, z);
-        //             int flat = Cuboid.flattenIndex(new int[]{x, y, z}, length.revert(), width.revert(), height.revert()).revert();
-        //             System.out.format("flat_index(:: %d) || ", flat);
-        //             Unit expanded = Cuboid.expandIndex(flat, length.revert(), width.revert(), height.revert());
-        //             System.out.format("expanded_index(:: %s) || \n", expanded);
-        //             System.out.println();
-        //             // cuboid.collect(new int[] {x, y, z});
-        //         }
-        //     }
-        // }
-        
-        // int i = 0;
-
-        // System.out.format("{length:: %d}\n", length.revert());
-        // System.out.format("{width:: %d}\n", width.revert());
-        // System.out.format("{height:: %d}\n", width.revert());
-        // for (; i < length.revert(); ++i) {
-        //     System.out.format("{i:: %d} || ", i);
-        //     Integer flat = Cuboid.flattenIndex(new int[] {0, 0, i}, length.revert(), width.revert(), height.revert()).revert();
-        //     System.out.format("(flat:: %d) || ", flat);
-        //     Unit position = cuboid.positions.get(
-        //         flat
-        //     );
-        //     System.out.format("(position:: %s)", position);
-        //     System.out.println();
-        // }
     }
 
     public static void next(Cuboid cuboid) {
@@ -309,10 +258,6 @@ class Cuboid {
 
         for (int i = 0; i < lhs.length; i++) {
             if (lhs[i] > rhs[i] || lhs[i] < 0) {
-// Arrays.stream(lhs).forEach(System.out::print);
-// System.out.println();
-// Arrays.stream(rhs).forEach(System.out::print);
-// System.out.println();
                 return false; 
             }
         }
@@ -366,7 +311,6 @@ class Cuboid {
             for (int y = 0; y < this.height.primitive(); ++y) {
                 System.out.print("|| ");
                 for (int x = 0; x < this.width.primitive(); ++x) {
-                    // System.out.println(i + " " + this.positions.get(i));
                     int index = Cuboid
                                     .flattenIndex(
                                         new int[]{x, y, z}, 
@@ -376,7 +320,6 @@ class Cuboid {
                                     )
                                     .revert()
                                     .intValue();
-                    // System.out.print(index);
                     System.out.print(this.positions.get(index));
                 }
                 System.out.println();
@@ -391,11 +334,6 @@ class Cuboid {
             throw new IllegalArgumentException("Cuboids only exist in 3 Dimensions", new Throwable());
 
         if (!Cuboid.constrained(coordinates, new int[] {this.width.revert(), this.height.revert(), this.length.revert()})) {
-// System.out.println();
-// Arrays.stream(coordinates).forEach(System.out::println);
-// System.out.println();
-// Arrays.stream(new int[] {this.length.revert(), this.width.revert(), this.height.revert()}).forEach(System.out::println);
-// System.out.println();
             throw new IllegalArgumentException("Coordinates cannot be beyond the bounds of the Cuboid", new Throwable("Cuboid::constrained line 250"));
         }
 
@@ -422,9 +360,7 @@ class Cuboid {
             );  
         }
             
-// System.out.println(x + " " + y + " " + this.length.revert());        
         for (i = 0; i < this.length.revert(); ++i) {
-// System.out.println(Cuboid.flattenIndex(new int[] {x, y, i}, this.width.revert(), this.height.revert(), this.length.revert()).revert());        
             positions.set(
                 Cuboid.flattenIndex(new int[] {x, y, i}, this.length.revert(), this.width.revert(), this.height.revert()).revert(),
                 new Unit(x, y, i, State.DEAD)
@@ -443,7 +379,6 @@ class Cuboid {
                     if (this.positions.get(Cuboid.flattenIndex(new int[]{x, y, z}, this.length.revert(), this.width.revert(), this.height.revert()).revert()).state == State.DEAD)
                         continue;
                     transformed.removeIf(unit -> (unit.state != State.DEAD));
-// System.out.println(String.format("(%d, %d, %d) :: %s", x, y, z, transformed));
                     if (transformed.size() >= b) {
                         b = transformed.size();
                         position = new int[] {x, y, z};
