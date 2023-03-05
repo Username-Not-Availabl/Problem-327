@@ -1,5 +1,7 @@
 package com.csc.Mathematics;
 
+import com.csc.Mathematics.Utilities;
+
 import java.util.List;
 
 import java.util.ArrayList;
@@ -8,7 +10,6 @@ import java.util.Arrays;
 import java.math.BigInteger;
 
 import java.nio.ByteBuffer;
-
 
 class Main extends Cuboid {
     public static void main(String[] args) {
@@ -45,7 +46,8 @@ class Main extends Cuboid {
     */
     public static void next(Cuboid cuboid) {
         cuboid.positions = cuboid.collect(cuboid.best());
-        // cuboid.display();
+        if (DEBUG)
+            cuboid.display();
     }
 
     /**
@@ -70,7 +72,7 @@ class Main extends Cuboid {
             
             int [] playerScores = Main.findPlayerScores(cuboid, 2);
             double R = playerScores[0] - (cuboid.volume.dprimitive() / 2);
-            // if (DEBUG)
+            if (DEBUG || true)
                 System.out.printf("R = %f at %d\n", R, i);
             
             if (i == (Main.MAX_TRIES - 160)) {
@@ -348,37 +350,6 @@ class UnSigned<T extends Number> {
 }
 
 /**
- * Utilities is an abstract class that exists to contain operations
- * that are useful but are not specific to Problem 327.
- * 
- * The original version contains many such methods but because they
- * would unecessarily expand the attachment size, I have removed them
- *  
- *  
- * @author      Clinton
- * @version     %I%, %G%
- * @since       1.0
- */
-abstract class Utilities {
-
-    /** 
-     * Converts value to binary string representaion
-     *
-     * @param value     value to be converted to String 
-     *                  
-     * @return          new String Object from the binary 
-     *                  representation of {@link value}
-     *
-     * @see             UnSigned<T>#[constructor]
-     * @since           1.0
-    */
-    public static <T extends Number> String asBinary(T value) {
-        return Long.toBinaryString((value.longValue()));
-    }
-    
-}
-
-/**
  * State is an enum that exists to represent the state 
  * of a Unit object
  *      ALIVE: is not among the Unit cubes that have been removed
@@ -484,9 +455,9 @@ class Cuboid {
      * @return          new Unit Object from {@link index, length, width, height}
      *
      * @see             Cuboid.populate
+     * @see             {@link https://stackoverflow.com/questions/7367770/how-to-flatten-or-index-3d-array-in-1d-array}
      * @since           1.0
     */
-    // https://stackoverflow.com/questions/7367770/how-to-flatten-or-index-3d-array-in-1d-array
     protected static Unit expandIndex(int index, int length, int width, int height) {
         final int z = index / (width * height);
         index -= (z * width * height);
