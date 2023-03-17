@@ -16,10 +16,9 @@ class Main extends Cuboid {
         /*
          * Main Entry Point of the Program
         */
-        UnSigned<Integer> length = new UnSigned<Integer>(81);
-        UnSigned<Integer> width = new UnSigned<Integer>(7);
-        // UnSigned<Integer> width = new UnSigned<Integer>(100);
-        UnSigned<Integer> height = new UnSigned<Integer>(17);
+        UnSigned<Integer> length = new UnSigned<Integer>(9);
+        UnSigned<Integer> width = new UnSigned<Integer>(3);
+        UnSigned<Integer> height = new UnSigned<Integer>(5);
         Cuboid cuboid = Cuboid.initialize(length, width, height);
 
         // int least = Main.findLeastNumberOfRequiredMoves(cuboid);
@@ -33,7 +32,7 @@ class Main extends Cuboid {
         // <2, a, b> || if a mod 2 != 0 then it behaves like a mod 2 == 0 until <2, a, a>
         //                                   Peak is what odd number a is. at <2, a, a>
         //                                   Remaining become 1 
-        double[] RandI = Main.findPeaksIn2PlayerGame(3, 9);
+        double[] RandI = Main.findPeaksIn2PlayerGame(5, 13);
         System.out.println(String.format("R is %f at %f",  RandI[0], RandI[1]));
     }
 
@@ -51,8 +50,8 @@ class Main extends Cuboid {
     }
 
     /**
-     * Finds the peaks of the Parabolic approximation of
-     * 
+     * Finds the peaks of the hyperbolic approximation of
+     * the discrte function R()
      * 
      * @see            {@link Main.next}
      * @see            {@link Main.findPlayerScores}
@@ -69,14 +68,16 @@ class Main extends Cuboid {
         for (int i = 1; ; ++i) {
             cuboid.length = (UnSigned<Integer>) UnSigned.of(i);
             cuboid = cuboid.initialize(cuboid.length, cuboid.width, cuboid.height);
+            System.out.print(String.format("n = %d || ", Main.findLeastNumberOfRequiredMoves(cuboid)));
+            cuboid = cuboid.initialize(cuboid.length, cuboid.width, cuboid.height);
             
             int [] playerScores = Main.findPlayerScores(cuboid, 2);
             double R = playerScores[0] - (cuboid.volume.dprimitive() / 2);
-            if (DEBUG || true)
+            if (DEBUG || true) {
                 System.out.printf("R = %f at %d\n", R, i);
+            }
             
-            if (i == (Main.MAX_TRIES - 160)) {
-            // if (R >= Math.min(currentMinimum, i)) {
+            if (R >= Math.min(currentMinimum, i)) {
                 return new double[]{R, (double)i};
             }
         }
