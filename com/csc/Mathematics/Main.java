@@ -54,8 +54,8 @@ class Main extends Cuboid {
     }
 
     /**
-     * Finds the peaks of the hyperbolic approximation of
-     * the discrte function R()
+     * Finds the peaks of the hyperbolic secant approximation of
+     * the discrete function R()
      * 
      * @see            {@link Main.next}
      * @see            {@link Main.findPlayerScores}
